@@ -16,5 +16,26 @@ DATA_PATH = Path("data/movies.csv")
 #Read the data from the file 
 df = pd.read_csv(DATA_PATH, encoding="utf-8");
 
+#Choose the features that we want to assess the data with 
+selected_feature = ["keywords" , "genres" , "tagline" , "cast" , "director"]
+
+#Replacing all the missing and non values with empty string to prevent error on concatination 
+for col in selected_feature:
+    df[col] = df[col].fillna("") #fillna fills all the empty string with being passed to it 
+
+# Combining the features 
+combined = (
+    df["genres"] + " " + 
+    df["keywords"] + " " + 
+    df["tagline"] + " " + 
+    df["cast"] + " " + 
+    df["director"]
+).str.lower
+
+#vectorize
+vectorizer = TfidfVectorizer(stop_words="english"); #This stops when it reaches to the english words like "This" "There" "is" "a"
+feature_matrix = vectorizer.fit_transform(combined) #This is converting the letters to numeric number 
+
+
 
 
