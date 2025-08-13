@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, Query
-from fastapi.middleware.cors import CORSMiddleware 
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles  
 from typing import List 
 import pandas as pd 
@@ -30,12 +30,25 @@ combined = (
     df["tagline"] + " " + 
     df["cast"] + " " + 
     df["director"]
-).str.lower
+).str.lower()
 
 #vectorize
 vectorizer = TfidfVectorizer(stop_words="english"); #This stops when it reaches to the english words like "This" "There" "is" "a"
 feature_matrix = vectorizer.fit_transform(combined) #This is converting the letters to numeric number 
 
+titles = df["titles"].fillna("").tolist() #This is conver the title of the movie to list format 
+title_to_index = {t : i for i , t in enumerate(titles)} #creating a list containing a index and a title 
+
+app = FastAPI(title="Movie Recommender")  
+
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
 
 
+#Fast API is a common library for building backend API it is fast easy to use 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
