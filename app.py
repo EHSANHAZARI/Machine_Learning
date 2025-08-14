@@ -10,7 +10,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from pathlib import Path
 
 # ---- Load data ----
-DATA_PATH = Path("data/movies.csv")
+DATA_PATH = Path("movies.csv")
 df = pd.read_csv(DATA_PATH, encoding="utf-8")
 
 selected_feature = ["keywords", "genres", "tagline", "cast", "director"]
