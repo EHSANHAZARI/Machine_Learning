@@ -81,4 +81,4 @@ def recommend(title: str = Query(..., description="Movie title")):
     return recommend_by_index(idx, k=10)
 
 # Mount static last (optional)
-app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+app.mount("/", StaticFiles(directory=".", html=True), name="frontend")
