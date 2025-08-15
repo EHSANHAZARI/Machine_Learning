@@ -25,13 +25,13 @@ combined = (
     df["director"]
 ).str.lower()
 
-vectorizer = TfidfVectorizer(stop_words="english")
+vectorizer = TfidfVectorizer(stop_words="english") #TfidVectorizer tokenise all the words and avoiding the english words like "there" and "is" to be vectorized and the creates weighted sparse matrix
 feature_matrix = vectorizer.fit_transform(combined)
 similarity_matrix = cosine_similarity(feature_matrix)  # It makes the process faster 
 
 
-# CHANGE HERE if your column is 'titles'
-title_col = "title"   # or "titles"
+
+title_col = "title"   
 titles = df[title_col].fillna("").tolist()
 title_to_index = {t: i for i, t in enumerate(titles)}
 
@@ -39,7 +39,7 @@ app = FastAPI(title="Movie Recommender")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  #let any website to clal your api 
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -50,15 +50,15 @@ def health():
 
 def recommend_by_index(idx: int, k: int = 10) -> List[str]:
     sims = similarity_matrix[idx]  # using the premade function 
-    order = np.argsort(sims)[::-1]
-    order = [i for i in order if i != idx][:k]
+    order = np.argsort(sims)[::-1]   #argsort sort the np array descending
+    order = [i for i in order if i != idx][:k]   # i != idx make sure that the searched movie itself is not incldued in the list 
     return [titles[i] for i in order]
 
 @app.get("/api/titles", response_model=List[str])
 def list_titles(q: str = Query("", description="Partial title for autocomplete")):
     if not q:
         return titles[:100]
-    matches = difflib.get_close_matches(q, titles, n=20, cutoff=0.4)
+    matches = difflib.get_close_matches(q, titles, n=20, cutoff=0.4)   #fuzzy match the provided input to the correct input 
     subs = [t for t in titles if q.lower() in t.lower()]
     seen, out = set(), []
     for t in matches + subs:
