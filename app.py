@@ -15,8 +15,8 @@ df = pd.read_csv(DATA_PATH, encoding="utf-8")
 
 selected_feature = ["keywords", "genres", "tagline", "cast", "director"]
 for col in selected_feature:
-    df[col] = df[col].fillna("")
-
+    df[col] = df[col].fillna("") #fill the null columns with ""
+3
 combined = (
     df["genres"] + " " +
     df["keywords"] + " " +
