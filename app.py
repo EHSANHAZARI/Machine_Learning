@@ -50,7 +50,7 @@ def health():
 
 def recommend_by_index(idx: int, k: int = 10) -> List[str]:
     sims = similarity_matrix[idx]  # using the premade function 
-    order = np.argsort(sims)[::-1]   #argsort sort the np array descending
+    order = np.argsort(sims)[::-1]   #argsort : sort the np array descending
     order = [i for i in order if i != idx][:k]   # i != idx make sure that the searched movie itself is not incldued in the list 
     return [titles[i] for i in order]
 
