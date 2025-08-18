@@ -24,27 +24,6 @@ Frontend: HTML, CSS, JavaScript (optional)
 
 Data: movies.csv
 
-📁 Project Structure (suggested)
-.
-├── backend/
-│   ├── app.py
-│   ├── services/
-│   │   └── recommender.py
-│   ├── data/
-│   │   └── movies.csv
-│   └── tests/
-│       └── test_api.py
-├── frontend/
-│   ├── index.html
-│   ├── index.css
-│   └── script.js
-├── requirements.txt
-├── README.md
-└── LICENSE
-
-
-If your repo is currently flat, no problem—this structure is a recommended improvement for clarity and testing.
-
 🚀 Quickstart
 1) Clone & setup
 git clone https://github.com/EHSANHAZARI/Movie-Recommendation-ML.git
